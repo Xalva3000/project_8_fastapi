@@ -1,0 +1,43 @@
+from sqlalchemy.ext.asyncio import AsyncSession
+from src.database.models import Product
+from sqlalchemy.engine import Result
+from sqlalchemy import select, delete
+from src.product.schemas import ProductCreate, ProductUpdate, ProductUpdatePartial
+
+
+async def select_all_products(session: AsyncSession) -> list[Product]:
+    stmt = select(Product).order_by(Product.product_id)
+    result: Result = await session.execute(stmt)
+    products = result.scalars().all()
+    return products
+
+
+async def select_product_by_id(session: AsyncSession, product_id: int) -> Product | None:
+    return await session.get(Product, product_id)
+
+
+async def insert_product(session: AsyncSession, product_in: ProductCreate) -> Product:
+    product = Product(**product_in.dict())
+    session.add(product)
+    await session.commit()
+    await session.refresh(product)
+    return product
+
+
+async def delete_product(session: AsyncSession, product: Product):
+    # stmt = delete(Product).where(Product.product_id == int(product_id))
+    # result = await session.execute(stmt)
+    await session.delete(product)
+    await session.commit()
+
+
+async def update_product(
+        session: AsyncSession,
+        product: Product,
+        product_update: ProductUpdate | ProductUpdatePartial,
+        partial: bool = False
+):
+    for k, v in product_update.model_dump(exclude_unset=partial).items():
+        setattr(product, k, v)
+    await session.commit()
+    return product

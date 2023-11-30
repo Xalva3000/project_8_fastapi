@@ -20,6 +20,9 @@ Faker = "^20.1.0"
 environs = "^9.5.0"
 redis = "^5.0.1"
 pydantic = {extras = ["email"], version = "^2.5.2"}
+pydantic-settings = "^2.1.0"
+greenlet = "^3.0.1"
+psycopg2 = "^2.9.9"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.11.0"

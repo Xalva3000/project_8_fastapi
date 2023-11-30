@@ -15,8 +15,3 @@ class PSQLConfig:
         url = f'{dbs}{"+" + driver if driver else ""}://{self.db_user}:{self.db_pass}@' \
               f'{self.db_netloc}:{self.db_port}/{self.db_name}'
         return url
-
-
-settings = PSQLConfig('.env')
-
-# print(settings.load_driver_url(driver='psycopg'))
