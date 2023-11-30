@@ -2,14 +2,14 @@ from fastapi import FastAPI
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from redis import asyncio as aioredis
-from src.producer.router import router as router_producer
 from src.product.router import router as router_product
+from src.contractor.router import router as router_contractor
 from src.database.connect import DBConnect
 import uvicorn
 
 app = FastAPI()
 
-app.include_router(router=router_producer, prefix='/producers')
+app.include_router(router=router_contractor, prefix='/contractors')
 app.include_router(router=router_product, prefix='/products')
 
 # @app.on_event("startup")
