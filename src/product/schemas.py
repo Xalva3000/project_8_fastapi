@@ -4,6 +4,7 @@ from pydantic import BaseModel, ConfigDict
 class ProductBase(BaseModel):
     fish: str
     cutting: str
+    size: str | None
     producer: str
     package: str
     weight: int
@@ -20,6 +21,7 @@ class ProductUpdate(ProductBase):
 class ProductUpdatePartial(ProductBase):
     fish: str | None = None
     cutting: str | None = None
+    size: str | None = None
     producer: str | None = None
     package: str | None = None
     weight: int | None = None
