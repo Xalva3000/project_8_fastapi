@@ -1,0 +1,25 @@
+{% include 'layout/header.html' %}
+
+    <title>update_Contractor</title>
+</head>
+
+<body>
+{% include 'layout/toolbar.html' %}
+<div>
+    <h1></h1>
+
+    <form action="/pages/update_contractor/submit/{{ old_contractor.contractor_id }}" method="post">
+        <h3>Изменение данных о контрагенте</h3>
+        {{ old_contractor }}
+        <div>
+            <br><br>
+	        <input type="text" name="name" placeholder="Название" size="20">
+            <input type="text" name="address" placeholder="Адрес" size="45">
+        </div>
+
+        <button type="submit" action="/pages/update_contractor/submit/{{ old_contractor.contractor_id }}">Изменить</button>
+    </form>
+</div>
+
+{% include 'layout/footer.html' %}
+

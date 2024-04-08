@@ -1,3 +1,4 @@
+from datetime import datetime, date
 from enum import Enum
 
 from pydantic import BaseModel, ConfigDict
@@ -12,6 +13,8 @@ from pydantic import BaseModel, ConfigDict
 class ContractBase(BaseModel):
     contract_type: str
     contractor_id: int
+    planned_date: date
+    reserved: bool = False
     payment: bool = False
     executed: bool = False
     note: str | None
@@ -28,9 +31,13 @@ class ContractUpdate(ContractBase):
 class ContractUpdatePartial(ContractBase):
     contract_type: str | None = None
     contractor_id: int | None = None
+    planned_date: date | None = None
+    reserved: bool | None = None
     payment: bool | None = None
     executed: bool | None = None
     note: str | None = None
+    created_at: datetime | None = None
+    executed_at: datetime | None = None
 
 
 class Contract(ContractBase):

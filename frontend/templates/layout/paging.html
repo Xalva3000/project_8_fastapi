@@ -1,0 +1,27 @@
+<div class="paging">
+    {% if page_params %}
+    <form name="paging_form" method="post">
+        <p>Размер страницы <input type="text" id="size" name="size" value="{{ page_params.size|default(20, true) }}"></p>
+        <p>Текущая страница <input type="text" id="page" name="page" value="{{ page_params.page|default(1) }}"></p>
+        {% for page_num in range(1, page_params.pages + 1) %}
+        <button type="submit" action="/pages/{{ subtitle }}" method="post" name="page" value="{{ page_num }}">{{ page_num }}</button>
+        {% endfor %}
+    </form>
+    {% else %}
+    <p>Нет информации о страницах</p>
+    {% endif %}
+</div>
+<hr>
+
+
+<!-- page: contract_id=None contractor_id=None product_id=SpecificationFilter(product_id=7) executed_at=None -->
+<!-- 
+<form id="filter_form" action="/pages/contracts/filter/" method="post" name="filter_form">
+    Контракт ID <input type="text" id="contract_id" name="contract_id" ><br>
+    Контрагент ID<input type="text" id="contractor_id" name="contractor_id" ><br>
+    Продукт ID<input type="text" id="product_id" name="product_id"><br>
+    <input type="date" id="executed_at" name="executed_at" value=""><br>
+
+    Страница <input type="text" id="page" name="page" ><br>
+    Размер страницы <input type="text" id="size" name="size" ><br>
+    <button type="submit" action="/pages/contracts/filter/" value="Фильтр">Фильтр</button> -->

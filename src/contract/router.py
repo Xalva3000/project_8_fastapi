@@ -1,6 +1,8 @@
+from typing import Union
+
 from fastapi import APIRouter, HTTPException, status, Depends
 from src.contract import crud
-from .schemas import Contract, ContractCreate, ContractUpdate, ContractUpdatePartial
+from src.contract.schemas import Contract, ContractCreate, ContractUpdate, ContractUpdatePartial
 from src.database.connect import db_connect
 from src.contract.dependencies import contract_by_id
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -8,11 +10,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 router = APIRouter(tags=['Contracts'])
 
 
-@router.get('/', response_model=list[Contract])
+@router.get('/', response_model=Union[list[Contract], dict])
 async def get_all_contracts(
         session: AsyncSession = Depends(db_connect.session_dependency),
 ):
-    return await crud.select_all_contracts(session=session)
+    result = await crud.select_all_contracts(session=session)
+    if result:
+        return result
+    return "No contracts yet"
 
 
 @router.post('/',

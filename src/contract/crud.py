@@ -1,3 +1,5 @@
+import datetime
+
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.database.models import Contract
 from sqlalchemy.engine import Result
@@ -21,7 +23,13 @@ async def select_all_contracts(session: AsyncSession) -> list[Contract]:
 
 
 async def select_contract_by_id(session: AsyncSession, contract_id: int) -> Contract | None:
-    return await session.get(Contract, contract_id)
+    contract = await session.get(Contract, contract_id)
+    return contract
+
+
+async def mark_contract_as_deleted(session: AsyncSession, contract: Contract):
+    contract.deleted_at = datetime.datetime.utcnow()
+    await session.commit()
 
 
 async def delete_contract(session: AsyncSession, contract: Contract):

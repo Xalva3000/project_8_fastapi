@@ -1,0 +1,53 @@
+{% include 'layout/header.html' %}
+    <title>add_Contract</title>
+</head>
+
+<body>
+
+<div>
+    <h1></h1>
+
+    <form action="/pages/create_contract_with_specifications/" method="post" name="full_form">
+        <h3>Создание нового контракта</h3>
+
+        <div>
+
+            
+            <br>
+
+            <select name="contract_type">
+                <option value="income">Оприходование</option>
+                <option value="outcome">Отгрузка</option>
+            </select>
+            <br><br>
+            
+            <input type="date" name="planned_date">
+            <br><br>
+
+            <select name="contractor_id">
+                {% for contractor in contractors %}
+                <option value="{{ contractor.contractor_id }}">{{ contractor }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+
+	        <textarea name="note" placeholder="Заметка"></textarea><br>
+
+
+        <h3>Спецификация</h3>
+        {% for i in range(spec_num) %}
+            <select name="product{{ i }}">
+                {% for item in storage_items %}
+                    <option label="{{ item.product }} Склад: {{ item.stored }}" value="{{ item.product_id }}">{{ item.product }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="quantity{{ i }}" placeholder="количество мешков">
+            <input type="text" name="price{{ i }}" placeholder="цена"><br><br>
+        {% endfor %}
+        </div>
+
+        <button type="submit" action="/pages/create_contract_with_specifications/">Создать</button>
+    </form>
+</div>
+
+{% include 'layout/footer.html' %}

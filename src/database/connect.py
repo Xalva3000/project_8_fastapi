@@ -6,7 +6,7 @@ from asyncio import current_task
 
 class DBConnect:
     def __init__(self, driver_url: str, echo: bool = False):
-        self.engine = create_async_engine(url=driver_url, echo=echo)
+        self.engine = create_async_engine(url=driver_url, echo=True)
         self.session_factory = async_sessionmaker(
             bind=self.engine,
             autoflush=False,

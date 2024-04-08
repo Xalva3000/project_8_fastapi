@@ -1,0 +1,35 @@
+<div class="contracts_toolbar">
+    <a href="">Список</a>
+    <a href="/pages/contracts/filter">Все контракты</a>
+    <br>
+    <a href="/pages/contracts/outcome">Отгрузки</a>
+    <a href="/pages/contracts/income">Приходы</a>
+    <a href="/pages/contracts/today">Сегодня</a>
+    <br>
+    <a href="http://127.0.0.1:8000/pages/contracts/no_execution">Не исполнено</a>
+    <a href="http://127.0.0.1:8000/pages/contracts/deleted">Удалено</a>
+    <br>
+    <!-- <form action="/pages/contracts/on_date" method="post">
+        <input type="date" id="day" name="day" value="{{ current_date }}">
+        <button type="submit" action="/pages/contracts/on_date">На дату</button> -->
+    </form>
+    <br><br>
+    <h3>Фильтр</h3>
+        <form id="filter_form" action="/pages/contracts/filter/" method="post" name="filter_form">
+            
+            Контракт ID <input type="text" id="contract_id" name="contract_id" ><br>
+            Контрагент ID<input type="text" id="contractor_id" name="contractor_id" ><br>
+            Продукт ID<input type="text" id="product_id" name="product_id"><br>
+            <input type="date" id="executed_at" name="executed_at" value=""><br>
+
+            <!-- Страница <input type="text" id="page" name="page" ><br>
+            Размер страницы <input type="text" id="size" name="size" ><br> -->
+            <button type="submit" action="/pages/contracts/filter/" value="filter">Фильтр</button>
+        </form>
+
+        
+
+        <br>
+
+</div>
+<hr>

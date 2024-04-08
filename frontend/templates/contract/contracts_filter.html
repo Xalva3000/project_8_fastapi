@@ -1,0 +1,151 @@
+{% include 'layout/header.html' %}
+    <title>Contracts</title>
+</head>
+<body>
+
+{% include 'layout/toolbar.html' %}
+
+
+
+<h3>Контракты</h3>
+<div class="contracts_toolbar">
+    <a href="">Список</a>
+    <a href="/pages/contracts/filter">Все контракты</a>
+    <br>
+    <a href="/pages/contracts/outcome">Отгрузки</a>
+    <a href="/pages/contracts/income">Приходы</a>
+    <a href="/pages/contracts/today">Сегодня</a>
+    <a href="http://127.0.0.1:8000/pages/contracts/no_execution">Не исполнено</a>
+    <a href="http://127.0.0.1:8000/pages/contracts/deleted">Удалено</a>
+    <br><br><hr>
+    <h3>Фильтр</h3>
+        <form id="filter_form" action="/pages/contracts/filter/" method="post" name="filter_form">
+            Тип котракта <select name="contract_type">
+                    <option value="all"{% if not filter_params.contract_type %}{{ 'selected' }}{% endif %}>Все типы</option>
+                    <option value="income"{% if filter_params.contract_type == 'income' %}{{ 'selected' }}{% endif %}>
+                        Оприходование</option>
+                    <option value="outcome"{% if filter_params.contract_type == 'outcome' %}{{ 'selected' }}{% endif %}>Отгрузка</option>
+                </select><br>
+            Контракт ID <input type="text" id="contract_id" name="contract_id" 
+                {% if filter_params.contract_id %} 
+                value="{{ filter_params.contract_id }}"
+                {% endif %}><br>
+            Контрагент ID<input type="text" id="contractor_id" name="contractor_id" 
+                {% if filter_params.contractor_id %} 
+                value="{{ filter_params.contractor_id }}"
+                {% endif %}><br>
+            Продукт ID<input type="text" id="product_id" name="product_id"
+                {% if filter_params.product_id %} 
+                value="{{ filter_params.product_id.product_id }}"
+                {% endif %}><br>
+            <input type="date" id="planned_date" name="planned_date" 
+                {% if filter_params.planned_date %} 
+                value="{{ filter_params.planned_date }}"
+                {% else %}
+                value=""
+                {% endif %}><br>
+
+            <button type="submit" action="/pages/contracts/filter/" value="Фильтр">Фильтр</button>
+            <hr>
+            <div class="paging">
+                {% if page_params %}
+                
+                    <p>
+                    Cтраница {{ page_params.page|default(1) }}
+                    Размер <input type="text" id="size" name="size" value="{{ page_params.size|default(20) }}" width="20">
+                    </p>
+                    {% for page_num in range(1, page_params.pages + 1) %}
+                    <button type="submit" action="/pages/contracts/filter/" method="post" name="page" value="{{ page_num }}">{{ page_num }}</button>
+                    {% endfor %}
+                
+                {% else %}
+                <p>Нет информации о страницах</p>
+                {% endif %}
+            </div>
+        </form>
+
+        
+        <hr>
+        <br>
+
+</div>
+
+{% if contracts is string %}
+{{ contracts }}
+{%else%}
+
+
+<table border="1">
+    <tr>
+        <th>Данные</th>
+        <th>Доступные действия</th>
+    </tr>
+
+{% for contract in contracts %}
+    <tr>
+        <td>bgcolor="#ff0000"
+    Контракт № {{ contract.contract_id }}<br>
+    Дата создания {{ contract.planned_date.strftime("%d.%m.%y %H:%M") }}<br>
+    {{ contract.contractor, contract.contract_type, contract.reserved, contract.payment, contract.executed }}
+        <ul>
+            {% for spec in contract.specifications %}
+                <li>{{ spec.product, spec.quantity, spec.quantity * spec.product.weight }}</li>
+            {% endfor %}
+        </ul><br>
+        </td>
+        <td>
+
+            {% if contract.reserved == False %}
+
+                    <button form="filter_form" type="submit" name="delete" value="{{ contract.contract_id }}" action="">
+                        Удалить
+                    </button>
+                <br>
+            {% endif %}
+            {% if contract.contract_type == 'outcome' %}
+            
+                <button form="filter_form" type="submit" name="reserve" value="{{ contract.contract_id }}" action="">
+                    {% if contract.reserved == False %}
+                    Бронь
+                    {% else %}
+                    Снять бронь
+                    {% endif %}
+                </button>
+            
+            {% endif %}
+
+            
+                <button form="filter_form" type="submit" name="payment" value="{{ contract.contract_id }}" action="">
+                    {% if contract.payment == False %}
+                    Оплата
+                    {% else %}
+                    Возврат оплаты
+                    {% endif %}
+                </button>
+            
+
+            
+                <button form="filter_form" type="submit" name="execution" value="{{ contract.contract_id }}" action="">
+                    {% if contract.contract_type == 'outcome' %}
+                        {% if contract.executed == False %}
+                        Отгрузка
+                        {% else %}
+                        Откат отгрузки
+                        {% endif %}
+                    {% else %}
+                        {% if contract.executed == False %}
+                        Оприходование
+                        {% else %}
+                        Отмена прихода
+                        {% endif %}
+                    {% endif %}
+                </button>
+            
+
+        </td>
+    </tr>
+{% endfor %}
+
+</table>
+{% endif %}
+{% include 'layout/footer.html' %}

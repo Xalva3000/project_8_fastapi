@@ -1,0 +1,32 @@
+{% include 'layout/header.html' %}
+    <title>Products</title>
+</head>
+<body>
+{% include 'layout/toolbar.html' %}
+<h3>Зарегистрированные продукты</h3>
+
+{% include 'layout/paging.html' %}
+<table>
+    <tr>
+        <th>Данные</th>
+        <th>Доступные действия</th>
+    </tr>
+
+{% for product in products %}
+    <tr>
+        <td>{{ product }}</td>
+
+        <td>
+            <form action="/pages/update_product/{{ product.product_id }}" method="get">
+                <button type="submit" action="/pages/update_product/{{ product.product_id }}">
+                    Изменить
+                </button>
+            </form>
+        </td>
+
+    </tr>
+{% endfor %}
+
+</table>
+
+{% include 'layout/footer.html' %}

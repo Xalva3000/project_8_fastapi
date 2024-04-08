@@ -1,0 +1,23 @@
+{% include 'layout/header.html' %}
+    <title>add_Contractor</title>
+</head>
+
+<body>
+
+<div>
+    <h1></h1>
+
+    <form action="/pages/create_contractor/" method="post">
+        <h3>Регистрация нового контрагента</h3>
+
+        <div>
+            <br>
+
+            <input type="text" name="name" placeholder="Название" size="25"><br><br>
+	        <input type="text" name="address" placeholder="Адрес" size="45"><br><br>
+        </div>
+
+        <button type="submit" action="/pages/create_contractor/">Создать</button>
+</div>
+
+{% include 'layout/footer.html' %}

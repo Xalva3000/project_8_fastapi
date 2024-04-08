@@ -1,0 +1,89 @@
+{% include 'layout/header.html' %}
+    <title>Contracts</title>
+</head>
+<body>
+
+{% include 'layout/toolbar.html' %}
+
+
+<h3>Контракты</h3>
+{% include 'layout/contracts-toolbar.html' %}
+{% if contracts is string %}
+{{ contracts }}
+{%else%}
+{% include 'layout/paging.html' %}
+<table border="1">
+    <tr>
+        <th>Данные</th>
+        <th>Доступные действия</th>
+    </tr>
+
+{% for contract in contracts %}
+    <tr>
+        <td>bgcolor="#ff0000"
+    Контракт № {{ contract.contract_id }}<br>
+    Дата создания {{ contract.created_at.strftime("%d.%m.%y %H:%M") }}<br>
+    {{ contract.contractor, contract.contract_type, contract.reserved, contract.payment, contract.executed }}
+        <ul>
+            {% for spec in contract.specifications %}
+                <li>{{ spec.product, spec.quantity, spec.quantity * spec.product.weight }}</li>
+            {% endfor %}
+        </ul><br>
+        </td>
+        <td>
+
+            {% if contract.reserved == False %}
+                <form action="/execution/delete_contract/{{ contract.contract_id }}" method="post">
+                    <button type="submit" action="/execution/delete_contract/{{ contract.contract_id }}">
+                        Удалить
+                    </button>
+                </form><br>
+            {% endif %}
+
+            {% if contract.contract_type == 'outcome' %}
+            <form action="/pages/contracts/{{ subtitle }}" method="get">
+                <button type="submit" name="reserve" value="{{ contract.contract_id }}" action="">
+                    {% if contract.reserved == False %}
+                    Бронь
+                    {% else %}
+                    Снять бронь
+                    {% endif %}
+                </button>
+            </form>
+            {% endif %}
+
+            <form action="/pages/contracts/{{ subtitle }}" method="get">
+                <button type="submit" name="payment" value="{{ contract.contract_id }}" action="">
+                    {% if contract.payment == False %}
+                    Оплата
+                    {% else %}
+                    Возврат оплаты
+                    {% endif %}
+                </button>
+            </form>
+
+            <form action="/pages/contracts/{{ subtitle }}" method="get">
+                <button type="submit" name="execution" value="{{ contract.contract_id }}" action="">
+                    {% if contract.contract_type == 'outcome' %}
+                        {% if contract.executed == False %}
+                        Отгрузка
+                        {% else %}
+                        Откат отгрузки
+                        {% endif %}
+                    {% else %}
+                        {% if contract.executed == False %}
+                        Оприходование
+                        {% else %}
+                        Отмена прихода
+                        {% endif %}
+                    {% endif %}
+                </button>
+            </form>
+            
+        </td>
+    </tr>
+{% endfor %}
+
+</table>
+{% endif %}
+{% include 'layout/footer.html' %}

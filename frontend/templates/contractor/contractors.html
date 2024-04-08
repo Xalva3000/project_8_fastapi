@@ -1,0 +1,33 @@
+{% include 'layout/header.html' %}
+    <title>Contractors</title>
+</head>
+<body>
+{% include 'layout/toolbar.html' %}
+
+<h3> Зарегистрированные контрагенты </h3>
+
+{% include 'layout/paging.html' %}
+
+<table>
+    <tr>
+        <th>Данные</th>
+        <th>Доступные действия</th>
+    </tr>
+{% for contractor in contractors %}
+    <tr>
+
+        <td>{{ contractor }}</td>
+
+        <td>
+            <form action="/pages/update_contractor/{{ contractor.contractor_id }}" method="get">
+                <button type="/pages/update_contractor/{{ contractor.contractor_id }}">
+                    Изменить
+                </button>
+            </form>
+        </td>
+
+    </tr>
+{% endfor %}
+</table>
+
+{% include 'layout/footer.html' %}

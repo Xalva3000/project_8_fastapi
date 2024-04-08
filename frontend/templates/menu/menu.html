@@ -1,0 +1,29 @@
+{% include 'layout/header.html' %}
+
+<div class="menu">
+
+    <p><a href="http://127.0.0.1:8000/pages/products">Продукты</a></p>
+        <ul>
+            <li><a href="http://127.0.0.1:8000/pages/add_product/">Новый продукт</a></li><br>
+        </ul>
+
+    <p><a href="http://127.0.0.1:8000/pages/contractors/">Контрагенты</a></p>
+        <ul>
+            <li><a href="http://127.0.0.1:8000/pages/add_contractor/">Новый контрагент</a></li><br>
+        </ul>
+
+    <p><a href="http://127.0.0.1:8000/pages/contracts/filter">Контракты</a></p>
+        <ul>
+            <li>Новый контракт
+                <form action="/pages/add_contract/" method="get">
+                [ Торговых позиций: <input type="text" name="spec_num" placeholder="#" style="width: 20px;">]
+                    <button type="submit">Создать</button>
+                </form>
+            </li>
+        </ul>
+
+    <p><a href="http://127.0.0.1:8000/pages/storage/">Склад</a></p>
+</div>
+
+</body>
+</html>

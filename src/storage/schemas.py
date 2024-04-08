@@ -1,23 +1,27 @@
 from pydantic import BaseModel
 
 
-class StorageBase(BaseModel):
+class StorageItemBase(BaseModel):
     product_id: int
-    quantity: int
+    available: int = 0
+    owned: int = 0
+    stored: int = 0
 
 
-class StorageCreate(StorageBase):
+class StorageItemCreate(StorageItemBase):
     pass
 
 
-class StorageUpdate(StorageBase):
+class StorageItemUpdate(StorageItemBase):
     pass
 
 
-class StorageUpdatePartial(StorageBase):
+class StorageItemUpdatePartial(StorageItemBase):
     product_id: int | None = None
-    quantity: int | None = None
+    available: int | None = None
+    owned: int | None = None
+    stored: int | None = None
 
 
-class Storage(StorageBase):
+class StorageItem(StorageItemBase):
     pass

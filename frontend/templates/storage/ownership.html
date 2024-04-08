@@ -1,0 +1,18 @@
+{% include 'layout/header.html' %}
+    <title>Ownership</title>
+</head>
+<body>
+{% include 'layout/toolbar.html' %}
+
+
+<h3>Собственность компании</h3>
+{% include 'layout/storage-toolbar.html' %}
+<hr>
+
+<ul>
+{% for poss in storage %}
+    <il>{{ poss.product, poss.owned }}</il><br>
+{% endfor %}
+</ul>
+
+{% include 'layout/footer.html' %}

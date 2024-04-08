@@ -1,0 +1,17 @@
+{% include 'layout/header.html' %}
+
+    <title>Product_added</title>
+</head>
+
+<body>
+{% include 'layout/toolbar.html' %}
+<div>
+
+        <h3>Регистрация нового продукта</h3>
+        {% for i in data %}
+        {{ i }}
+        {% endfor %}
+</div>
+
+{% include 'layout/footer.html' %}
+
